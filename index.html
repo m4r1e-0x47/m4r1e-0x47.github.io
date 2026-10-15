@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marie G. — Analyste SOC / MDR · Cybersécurité</title>
+<meta name="description" content="Marie G., analyste SOC/MDR N2/N3, élève-ingénieure cybersécurité au CNAM.">
+<meta property="og:title" content="Marie G. — Analyste SOC / MDR · Cybersécurité">
+<meta property="og:description" content="Détection, réponse à incident et automatisation SOC.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070b14; --bg2:#0b1120; --bg3:#111a2e;
+  --line:#1b2540; --line2:#28365a;
+  --text:#e3e9f5; --muted:#8a98b8; --dim:#56648a;
+  --accent:#60a5fa; --accent2:#818cf8; --space:#f0b46a;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --sans:'Inter',system-ui,sans-serif;
+  --side:320px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+::selection{background:var(--accent2);color:#fff}
+
+#net{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.layout{position:relative;z-index:1;display:flex;min-height:100vh}
+
+/* ---------- SIDEBAR ---------- */
+.side{width:var(--side);flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;scrollbar-width:none;
+  background:rgba(11,17,32,.82);backdrop-filter:blur(10px);border-right:1px solid var(--line);
+  padding:2.6rem 1.8rem 2rem;display:flex;flex-direction:column}
+.side::-webkit-scrollbar{display:none}
+.avatar{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;
+  font-family:var(--mono);font-size:1.5rem;font-weight:500;color:var(--accent);
+  background:radial-gradient(circle at 30% 25%,#1c2a4c,#0b1120 70%);
+  border:1px solid var(--line2);box-shadow:0 0 0 4px rgba(96,165,250,.06);margin-bottom:1.3rem;position:relative}
+.avatar::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:1px dashed rgba(129,140,248,.3);animation:orbit 30s linear infinite}
+.avatar::before{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:var(--accent2);top:-6px;left:50%;
+  transform-origin:0 48px;animation:orbit 12s linear infinite;box-shadow:0 0 8px var(--accent2)}
+@keyframes orbit{to{transform:rotate(360deg)}}
+.name{font-size:1.55rem;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.role{font-family:var(--mono);font-size:.78rem;color:var(--accent);margin-top:.45rem;line-height:1.5}
+.loc{font-size:.82rem;color:var(--muted);margin-top:.6rem}
+.status{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.1rem;padding:.35rem .7rem;border:1px solid var(--line2);
+  border-radius:999px;font-family:var(--mono);font-size:.7rem;color:var(--space);background:rgba(240,180,106,.05);width:fit-content}
+.status i{width:6px;height:6px;border-radius:50%;background:var(--space);box-shadow:0 0 6px var(--space)}
+
+.nav{list-style:none;margin:2.2rem 0 auto;display:flex;flex-direction:column;gap:.15rem}
+.nav a{display:flex;align-items:center;gap:.8rem;padding:.42rem 0;text-decoration:none;font-size:.86rem;color:var(--muted);transition:color .2s}
+.nav a span{font-family:var(--mono);font-size:.68rem;color:var(--dim);width:1.4rem}
+.nav a::after{content:"";height:1px;width:16px;background:var(--line2);transition:width .25s,background .25s}
+.nav a:hover,.nav a.active{color:var(--text)}
+.nav a.active::after{width:40px;background:var(--accent)}
+.nav a.active span{color:var(--accent)}
+
+.links{display:flex;gap:.6rem;margin-top:2rem;flex-wrap:wrap}
+.links a{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--line2);border-radius:10px;color:var(--muted);transition:all .2s}
+.links a:hover{color:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
+.links svg{width:17px;height:17px}
+
+/* ---------- MAIN ---------- */
+main{flex:1;min-width:0;padding:4.5rem 4rem 3rem;max-width:960px}
+section{padding:1rem 0 4.2rem;scroll-margin-top:2rem}
+.sh{display:flex;align-items:baseline;gap:.9rem;margin-bottom:1.8rem}
+.sh .n{font-family:var(--mono);font-size:.78rem;color:var(--accent)}
+.sh h2{font-size:1.45rem;font-weight:700;letter-spacing:-.02em}
+.sh .l{flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent);align-self:center}
+
+.hero-kicker{font-family:var(--mono);font-size:.8rem;color:var(--accent);margin-bottom:1rem}
+.hero-kicker::before{content:"> ";color:var(--dim)}
+.hero h1{font-size:clamp(1.9rem,4vw,2.7rem);font-weight:700;letter-spacing:-.03em;line-height:1.15;margin-bottom:1.4rem}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);max-width:640px;margin-bottom:1rem}
+.hero p strong{color:var(--text);font-weight:500}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-top:2rem}
+.stat{border:1px solid var(--line);background:rgba(11,17,32,.6);border-radius:12px;padding:1rem}
+.stat b{display:block;font-size:1.5rem;font-weight:700;letter-spacing:-.02em}
+.stat small{font-size:.75rem;color:var(--muted);line-height:1.4;display:block}
+
+/* timeline */
+.tl{position:relative;padding-left:1.6rem}
+.tl::before{content:"";position:absolute;left:4px;top:.6rem;bottom:.6rem;width:1px;background:var(--line2)}
+.job{position:relative;margin-bottom:1.1rem;padding:1.3rem 1.4rem;border:1px solid var(--line);border-radius:14px;background:rgba(11,17,32,.65);transition:border-color .25s}
+.job:hover{border-color:var(--line2)}
+.job::before{content:"";position:absolute;left:-1.6rem;top:1.65rem;width:9px;height:9px;border-radius:50%;background:var(--bg);border:2px solid var(--dim)}
+.job.now::before{border-color:var(--accent);background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.jh{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.55rem}
+.jt{font-weight:600;font-size:1rem}
+.jc{font-size:.86rem;color:var(--accent)}
+.jd{font-family:var(--mono);font-size:.74rem;color:var(--dim);white-space:nowrap;padding-top:.2rem}
+.job p{color:var(--muted);font-size:.9rem}
+.job ul{list-style:none;margin-top:.5rem}
+.job li strong{color:var(--text);font-weight:500}
+.job li{color:var(--muted);font-size:.9rem;padding-left:1.1rem;position:relative;margin-bottom:.25rem}
+.job li::before{content:"▸";position:absolute;left:0;color:var(--dim);font-size:.75rem;top:.12rem}
+
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.85rem}
+.tag{font-family:var(--mono);font-size:.68rem;padding:.2rem .55rem;border-radius:6px;border:1px solid var(--line2);color:var(--muted)}
+.tag.hl{color:var(--accent);border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.06)}
+.tag.sp{color:var(--space);border-color:rgba(240,180,106,.35);background:rgba(240,180,106,.06)}
+
+/* projects */
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.proj{border:1px solid var(--line);border-radius:14px;padding:1.3rem 1.35rem;background:rgba(11,17,32,.65);display:flex;flex-direction:column;transition:transform .25s,border-color .25s}
+.proj:hover{transform:translateY(-3px);border-color:var(--line2)}
+.proj.feat{grid-column:1/-1;border-color:rgba(96,165,250,.28);background:linear-gradient(135deg,rgba(96,165,250,.06),rgba(11,17,32,.7) 45%)}
+.pk{font-family:var(--mono);font-size:.68rem;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
+.proj.feat .pk{color:var(--accent)}
+.proj h3{font-size:1.02rem;font-weight:600;margin-bottom:.45rem;letter-spacing:-.01em}
+.proj p{color:var(--muted);font-size:.88rem;flex:1}
+.proj{position:relative}
+.plink{color:inherit;text-decoration:none}
+.plink::after{content:"";position:absolute;inset:0;border-radius:14px}
+.plink:focus-visible{outline:none}.proj:has(.plink:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.more{font-family:var(--mono);font-size:.72rem;color:var(--accent);margin-top:.9rem}
+
+/* skills */
+.sk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.sk{border:1px solid var(--line);border-radius:14px;padding:1.2rem 1.3rem;background:rgba(11,17,32,.65)}
+.sk h3{font-family:var(--mono);font-size:.76rem;font-weight:500;color:var(--accent);margin-bottom:.4rem}
+.sk h3::before{content:"$ ";color:var(--dim)}
+
+/* education */
+.edu{display:grid;grid-template-columns:140px 1fr;gap:1.2rem;padding:1.2rem 0;border-bottom:1px solid var(--line)}
+.edu:last-child{border-bottom:none}
+.ed{font-family:var(--mono);font-size:.74rem;color:var(--dim);padding-top:.2rem}
+.et{font-weight:600}
+.es{font-size:.86rem;color:var(--accent)}
+.en{font-size:.88rem;color:var(--muted);margin-top:.3rem}
+
+.eng{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.eng div{border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.2rem;background:rgba(11,17,32,.65)}
+.eng b{display:block;font-size:.95rem;margin-bottom:.3rem}
+.eng span{font-size:.85rem;color:var(--muted)}
+
+.contact{border:1px solid var(--line2);border-radius:16px;padding:2rem;background:linear-gradient(135deg,rgba(96,165,250,.07),rgba(129,140,248,.04));}
+.contact p{color:var(--muted);max-width:560px;margin-bottom:1.3rem}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.2rem;border-radius:10px;background:var(--accent);color:#06101f;font-weight:600;font-size:.9rem;text-decoration:none;margin:0 .5rem .5rem 0;transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line2)}
+
+footer{font-family:var(--mono);font-size:.72rem;color:var(--dim);padding-top:1rem;border-top:1px solid var(--line)}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:980px){
+  main{padding:3.5rem 2.2rem 3rem}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:820px){
+  .layout{flex-direction:column}
+  .side{position:relative;width:100%;height:auto;border-right:none;border-bottom:1px solid var(--line);padding:2rem 16px 1.5rem}
+  .nav{display:none}
+  .links{margin-top:1.2rem}
+  main{padding:2.5rem 16px 2rem}
+  .proj-grid,.sk-grid,.eng{grid-template-columns:1fr}
+  .edu{grid-template-columns:1fr;gap:.3rem}
+  .jd{white-space:normal}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<canvas id="net" aria-hidden="true"></canvas>
+
+<div class="layout">
+<aside class="side">
+  <div class="avatar" aria-hidden="true">MG</div>
+  <div class="name">Marie G.</div>
+  <div class="role">Analyste SOC / MDR N2-N3<br>Élève-ingénieure cybersécurité</div>
+  <div class="loc">Toulouse · Ariège, en télétravail</div>
+  
+  <ul class="nav">
+    <li><a href="#about"><span>01</span>À propos</a></li>
+    <li><a href="#experience"><span>02</span>Expérience</a></li>
+    <li><a href="#projets"><span>03</span>Projets</a></li>
+    <li><a href="#competences"><span>04</span>Compétences</a></li>
+    <li><a href="#formation"><span>05</span>Formation</a></li>
+    <li><a href="#contact"><span>06</span>Contact</a></li>
+  </ul>
+
+    <div class="links">
+    <a href="https://www.linkedin.com/in/m4r1e-0x47/" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+    </a>
+    <a href="https://github.com/m4r1e-0x47" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57v-2.03c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.08-.74.09-.73.09-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .3"/></svg>
+    </a>
+    <a href="#contact" class="js-mail" aria-label="E-mail">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+    </a>
+  </div>
+</aside>
+
+<main>
+  <!-- 01 ABOUT -->
+  <section id="about" class="hero">
+    <div class="hero-kicker">whoami</div>
+    <h1>Analyste SOC, <em>côté détection et réponse à incident.</em></h1>
+    <p>Je suis analyste <strong>SOC N2-N3</strong> chez Exaprobe depuis 2023. Je traite les alertes et les incidents d'une trentaine de clients, sur cinq EDR différents reliés à <strong>Cortex XSOAR</strong>. Je développe aussi des outils en Python pour gagner du temps sur les tâches répétitives, et je forme les nouveaux analystes N1.</p>
+    <p>J'ai commencé dans la <strong>Marine nationale</strong>, où j'ai passé 9 ans sur les systèmes d'information et de communication, dont l'administration de domaines OTAN. J'y ai aussi encadré une équipe technique en mission. J'ai ensuite travaillé en infrastructure, en IAM et en cybersécurité industrielle avant d'arriver au SOC.</p>
+    <p>Je prépare un <strong>titre d'ingénieur en cybersécurité au CNAM</strong>, avec une soutenance prévue en 2027. Sur mon temps perso, je travaille aussi sur la sécurité des systèmes spatiaux.</p>
+    <div class="stats">
+      <div class="stat"><b>~30</b><small>clients MDR/XDR suivis</small></div>
+      <div class="stat"><b>5</b><small>plateformes EDR en production</small></div>
+      <div class="stat"><b>9 ans</b><small>Marine nationale, SIC & OTAN</small></div>
+      <div class="stat"><b>2027</b><small>diplôme d'ingénieur CNAM</small></div>
+    </div>
+  </section>
+
+  <!-- 02 EXPERIENCE -->
+  <section id="experience">
+    <div class="sh"><span class="n">02</span><h2>Expérience</h2><span class="l"></span></div>
+    <div class="tl">
+      <div class="job now reveal">
+        <div class="jh"><div><div class="jt">Analyste SOC / MDR-XDR N2-N3</div><div class="jc">Exaprobe (groupe Econocom)</div></div><div class="jd">2023 — aujourd'hui</div></div>
+        <p>Analyste au sein d'un SOC managé multi-clients (universités, collectivités, PME industrielles), sur l'ensemble du cycle de détection et de réponse aux incidents.</p>
+        <ul>
+          <li><strong>Investigation &amp; réponse</strong> : analyse d'arbres de processus, d'injections mémoire, de mouvements latéraux et de comportements suspects sur CrowdStrike Falcon, Cortex XDR, HarfangLab, WithSecure et Bitdefender GravityZone. Pilotage du confinement (isolation d'hôtes, kill process) et de l'éradication.</li>
+          <li><strong>Automatisation &amp; orchestration</strong> : playbooks Cortex XSOAR et scripts Python pour automatiser le traitement des incidents et la génération des rapports KPI (HarfangLab + XSOAR → PowerPoint).</li>
+          <li><strong>Tuning &amp; réduction du bruit</strong> : optimisation des politiques de détection, gestion des faux positifs, règles BIOC (Cortex XDR) et FQL (CrowdStrike).</li>
+          <li><strong>Reporting &amp; relation client</strong> : rapports d'incidents (FR/EN), préparation et présentation des comités de sécurité mensuels, préconisations de remédiation.</li>
+          <li><strong>Formation</strong> : accompagnement des nouveaux analystes N1.</li>
+        </ul>
+        <div class="tags"><span class="tag hl">CrowdStrike Falcon</span><span class="tag hl">Cortex XDR</span><span class="tag hl">Cortex XSOAR</span><span class="tag hl">HarfangLab</span><span class="tag hl">WithSecure</span><span class="tag hl">GravityZone</span><span class="tag">Python</span><span class="tag">MITRE ATT&amp;CK</span><span class="tag">FQL</span><span class="tag">KQL</span></div>
+      </div>
+      <div class="job reveal">
+        <div class="jh"><div><div class="jt">Consultante en cybersécurité industrielle</div><div class="jc">Capgemini</div></div><div class="jd">2019 — 2023</div></div>
+        <p>Référente cybersécurité sur des systèmes industriels embarqués, secteur aéronautique et défense.</p>
+        <ul>
+          <li>Exigences de sécurité tirées des audits et des tests d'intrusion.</li>
+          <li>Mise en place des contre-mesures et durcissement des systèmes.</li>
+          <li>Revues de projet (CDR, DRB, E-TRB) et validation de la documentation technique.</li>
+          <li>Automatisation du maintien en condition de sécurité (MCS).</li>
+        </ul>
+        <div class="tags"><span class="tag">Systèmes embarqués</span><span class="tag">Durcissement</span><span class="tag">MCS</span><span class="tag">Aéronautique / défense</span></div>
+      </div>
+      <div class="job reveal">
+        <div class="jh"><div><div class="jt">Analyste cybersécurité</div><div class="jc">Atos</div></div><div class="jd">2018 — 2019</div></div>
+        <ul>
+          <li>Projets IAM et PKI.</li>
+          <li>Déploiement et exploitation de bastions (Wallix, Balabit).</li>
+          <li>Gestion des CRL/ARL, réplication IBM Tivoli.</li>
+          <li>Administration des droits d'accès et des annuaires.</li>
+        </ul>
+        <div class="tags"><span class="tag">IAM</span><span class="tag">PKI</span><span class="tag">Wallix</span><span class="tag">Balabit</span></div>
+      </div>
+      <div class="job reveal">
+        <div class="jh"><div><div class="jt">Réserviste, cybersécurité</div><div class="jc">Marine nationale</div></div><div class="jd">2017</div></div>
+        <ul>
+          <li>État des lieux après audit et pilotage du plan de remédiation.</li>
+          <li>Analyse de risques (DIC) et préparation des dossiers d'homologation.</li>
+          <li>Documentation de sécurité : procédures d'exploitation, politiques, rapports.</li>
+          <li>Suivi des plans d'action et des indicateurs de sensibilisation.</li>
+        </ul>
+        <div class="tags"><span class="tag">Homologation</span><span class="tag">Analyse de risques</span><span class="tag">SMSI</span><span class="tag">ISO 27001</span></div>
+      </div>
+      <div class="job reveal">
+        <div class="jh"><div><div class="jt">Systèmes &amp; infrastructure</div><div class="jc">Sogeti · MGI Consultants · Proservia</div></div><div class="jd">2014 — 2017</div></div>
+        <ul>
+          <li><strong>Sogeti</strong>, consultante infrastructure : serveurs Linux (Red Hat, Puppet, Ansible) et Windows, VMware, sauvegardes, supervision Nagios/Centreon, déploiement des correctifs suivant les avis CERT-FR.</li>
+          <li><strong>MGI Consultants</strong>, pour Stelia Aerospace : administration systèmes et virtualisation (Microsoft, VMware).</li>
+          <li><strong>Proservia</strong>, pour Liebherr Aerospace : support N1/N2 pour 1 500 utilisateurs, Active Directory, SCCM, Citrix, interventions en atelier de production.</li>
+        </ul>
+        <div class="tags"><span class="tag">Red Hat</span><span class="tag">Ansible</span><span class="tag">VMware</span><span class="tag">Active Directory</span><span class="tag">SCCM</span></div>
+      </div>
+      <div class="job reveal">
+        <div class="jh"><div><div class="jt">Administratrice systèmes</div><div class="jc">Marine nationale</div></div><div class="jd">2005 — 2014</div></div>
+        <ul>
+          <li>Administration de domaines Windows à haut niveau de sécurité (OTAN et US) et des annuaires de messagerie.</li>
+          <li>Installation et mise en réseau d'infrastructures SIC complètes, à terre et en mer.</li>
+          <li>Configuration réseau Cisco (routage, VLAN) pour les échanges sécurisés entre nations de la coalition.</li>
+          <li>Durcissement des systèmes selon la PSSI-A et les référentiels ANSSI.</li>
+          <li>Cheffe d'équipe : encadrement de 3 techniciens SIC sur de longues missions opérationnelles, avec la responsabilité de maintenir les communications stratégiques disponibles.</li>
+        </ul>
+        <div class="tags"><span class="tag">OTAN</span><span class="tag">Cisco</span><span class="tag">PSSI-A</span><span class="tag">Management</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 PROJECTS -->
+  <section id="projets">
+    <div class="sh"><span class="n">03</span><h2>Projets</h2><span class="l"></span></div>
+    <div class="proj-grid">
+      <article class="proj feat reveal">
+        <div class="pk">Mémoire d'ingénieur · CNAM</div>
+        <h3><a class="plink" href="projets/voc-cert.html" target="_blank" rel="noopener">Centre opérationnel hybride VOC-CERT</a></h3>
+        <p>Comment ajouter la gestion des vulnérabilités et la réponse CERT à un SOC qui existe déjà. Je propose une méthode de priorisation des vulnérabilités (CVSS, EPSS, KEV) et je la teste sur un labo de trois machines.</p>
+        <div class="tags"><span class="tag">TheHive</span><span class="tag">Cortex</span><span class="tag">MISP</span><span class="tag">ELK</span><span class="tag">Velociraptor</span></div>
+        <span class="more">Voir le projet ↗</span>
+      </article>
+      <article class="proj reveal">
+        <div class="pk">Threat intel</div>
+        <h3><a class="plink" href="projets/ioc-analyzer.html" target="_blank" rel="noopener">IOC Analyzer</a></h3>
+        <p>On colle une liste d'IOC, l'outil interroge plusieurs sources de threat intel et sort un résultat exportable en STIX 2.1.</p>
+        <div class="tags"><span class="tag">FastAPI</span><span class="tag">STIX 2.1</span><span class="tag">CTI</span></div>
+        <span class="more">Voir le projet ↗</span>
+      </article>
+      <article class="proj reveal">
+        <div class="pk">Projet perso · spatial</div>
+        <h3><a class="plink" href="projets/sparta-ccsds.html" target="_blank" rel="noopener">Cartographie SPARTA ↔ CCSDS SDLS &amp; labo NOS3</a></h3>
+        <p>Un tableau qui relie les techniques d'attaque SPARTA aux protections prévues par les normes CCSDS, testé sur un simulateur de satellite (NOS3).</p>
+        <div class="tags"><span class="tag">SPARTA</span><span class="tag">CCSDS SDLS</span><span class="tag">NOS3</span></div>
+        <span class="more">Voir le projet ↗</span>
+      </article>
+      <article class="proj reveal">
+        <div class="pk">IA locale · SOC</div>
+        <h3><a class="plink" href="projets/triage-llm.html" target="_blank" rel="noopener">Triage d'alertes par LLM local</a></h3>
+        <p>Un modèle de langage qui tourne en local et donne un premier avis vrai/faux positif sur les alertes EDR. Aucune donnée ne sort de la machine.</p>
+        <div class="tags"><span class="tag">Ollama</span><span class="tag">Qwen 2.5</span><span class="tag">Python</span></div>
+        <span class="more">Voir le projet ↗</span>
+      </article>
+      <article class="proj reveal">
+        <div class="pk">IA locale · confidentialité</div>
+        <h3><a class="plink" href="projets/anonymiseur.html" target="_blank" rel="noopener">Anonymiseur de données client</a></h3>
+        <p>Remplace les noms de clients, de machines et d'utilisateurs avant d'utiliser une IA pour rédiger un rapport.</p>
+        <div class="tags"><span class="tag">Ollama</span><span class="tag">Privacy by design</span></div>
+        <span class="more">Voir le projet ↗</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- 04 SKILLS -->
+  <section id="competences">
+    <div class="sh"><span class="n">04</span><h2>Compétences</h2><span class="l"></span></div>
+    <div class="sk-grid">
+      <div class="sk reveal"><h3>detection_response</h3><div class="tags"><span class="tag hl">EDR / XDR multi-éditeurs</span><span class="tag">Cortex XSOAR</span><span class="tag">MITRE ATT&amp;CK</span><span class="tag">Threat hunting</span><span class="tag">Forensic Windows / Linux</span><span class="tag">Velociraptor</span></div></div>
+      <div class="sk reveal"><h3>cti_vuln</h3><div class="tags"><span class="tag">MISP</span><span class="tag">STIX 2.1</span><span class="tag">TheHive / Cortex</span><span class="tag">CVSS · EPSS · KEV</span></div></div>
+      <div class="sk reveal"><h3>dev_automation</h3><div class="tags"><span class="tag">Python</span><span class="tag">FastAPI / Flask</span><span class="tag">Ollama / LLM locaux</span><span class="tag">ELK</span><span class="tag">Kubernetes</span></div></div>
+      <div class="sk reveal"><h3>gouvernance</h3><div class="tags"><span class="tag">EBIOS RM</span><span class="tag">ISO 27001</span><span class="tag">NIS</span><span class="tag">IAM / PAM</span><span class="tag">CCSDS / SPARTA</span></div></div>
+      <div class="sk reveal"><h3>humain</h3><div class="tags"><span class="tag">Encadrement d'équipe</span><span class="tag">Formation N1</span><span class="tag">Relation client</span><span class="tag">Documentation</span></div></div>
+    </div>
+  </section>
+
+  <!-- 05 EDUCATION -->
+  <section id="formation">
+    <div class="sh"><span class="n">05</span><h2>Formation &amp; engagements</h2><span class="l"></span></div>
+    <div class="edu reveal"><div class="ed">2022 — 2027</div><div><div class="et">Titre d’ingénieur en cybersécurité (CYC9106A)</div><div class="es">CNAM Occitanie</div><div class="en">Mémoire : centre opérationnel hybride VOC-CERT.</div></div></div>
+    <div class="edu reveal"><div class="ed">2020</div><div><div class="et">Licence Informatique</div><div class="es">CNAM</div></div></div>
+    <div class="eng" style="margin-top:1.6rem">
+      <div class="reveal"><b>CEFCYS</b><span>Membre du Cercle des femmes de la cybersécurité.</span></div>
+      <div class="reveal"><b>Elles Bougent</b><span>Marraine : je présente les métiers techniques à des collégiennes et des étudiantes.</span></div>
+      <div class="reveal"><b>Réserve opérationnelle</b><span>Réserviste de la Marine nationale.</span></div>
+    </div>
+  </section>
+
+  <!-- 06 CONTACT -->
+  <section id="contact">
+    <div class="sh"><span class="n">06</span><h2>Contact</h2><span class="l"></span></div>
+    <div class="contact reveal">
+      <p>Pour une question, une opportunité ou simplement échanger sur le SOC, vous pouvez m'écrire.</p>
+      <a class="btn js-mail" href="#contact">M'écrire</a>
+      <a class="btn ghost" href="https://www.linkedin.com/in/m4r1e-0x47/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </section>
+
+  <footer>© <span id="y"></span> Marie G. · pas de cookies, pas de traceurs</footer>
+</main>
+</div>
+
+<script>
+document.getElementById('y').textContent=new Date().getFullYear();
+
+/* e-mail assemblé à l'affichage (anti-robots) */
+(function(){const u=['m4r1e','0x47'].join('-'),d=['proton','me'].join('.');
+document.querySelectorAll('.js-mail').forEach(a=>{a.href='mai'+'lto:'+u+'@'+d})})();
+
+/* réseau de particules */
+(function(){
+  const c=document.getElementById('net'),x=c.getContext('2d');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const COLS=['96,165,250','129,140,248','240,180,106'];
+  let W,H,P=[],DIST=130;
+  function size(){const d=devicePixelRatio||1;W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0)}
+  function init(){const n=Math.min(90,Math.floor(W*H/16000));P=[];for(let i=0;i<n;i++)P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:Math.random()*1.4+.5,c:COLS[Math.random()<.5?0:1],b:Math.random()*6})}
+  function draw(){
+    x.clearRect(0,0,W,H);
+    for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){
+      const dx=P[i].x-P[j].x,dy=P[i].y-P[j].y,d=Math.hypot(dx,dy);
+      if(d<DIST){const a=(1-d/DIST)*.14;const g=x.createLinearGradient(P[i].x,P[i].y,P[j].x,P[j].y);g.addColorStop(0,`rgba(${P[i].c},${a})`);g.addColorStop(1,`rgba(${P[j].c},${a})`);x.beginPath();x.moveTo(P[i].x,P[i].y);x.lineTo(P[j].x,P[j].y);x.strokeStyle=g;x.lineWidth=.6;x.stroke()}
+    }
+    P.forEach(p=>{p.b+=.02;x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fillStyle=`rgba(${p.c},${.3+.2*Math.sin(p.b)})`;x.fill();
+      if(!reduce){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1}});
+    if(!reduce)requestAnimationFrame(draw);
+  }
+  size();init();draw();
+  addEventListener('resize',()=>{size();init();if(reduce)draw()});
+})();
+
+/* navigation active */
+const links=document.querySelectorAll('.nav a');
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-30% 0px -60% 0px'});
+document.querySelectorAll('section[id]').forEach(s=>io.observe(s));
+
+/* apparition au scroll */
+const rv=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rv.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>rv.observe(el));
+</script>
+</body>
+</html>
